@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>文件上传</title>
+</head>
+<body>
+<form id="uploadImage" enctype="multipart/form-data">
+    <input type="file" id="fileInput" name="file" accept="image/*" required />
+    <button type="submit">上传图片</button>
+</form>
+
+<script>
+    document.getElementById('uploadImage').onsubmit = async function (e) {
+        e.preventDefault();
+        const fileInput = document.getElementById('fileInput');
+        const formData = new FormData();
+        formData.append('file', fileInput.files[0]);
+
+        const response = await fetch('/api/upload', {
+            method: 'POST',
+            body: formData,
+        });
+
+        const result = await response.text();
+        alert(result);
+    };
+</script>
+</body>
+</html>
