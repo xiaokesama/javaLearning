@@ -9,6 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="springboot-nacos" />
         <module name="springboot-mino" />
+        <module name="springboot-redis" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -20,6 +21,7 @@
       <module name="nacosDemo" options="-parameters" />
       <module name="springboot-mino" options="-parameters" />
       <module name="springboot-nacos" options="-parameters" />
+      <module name="springboot-redis" options="-parameters" />
     </option>
   </component>
 </project>
