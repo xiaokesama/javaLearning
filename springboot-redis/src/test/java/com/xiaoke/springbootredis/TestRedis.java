@@ -118,6 +118,7 @@ public class TestRedis {
                 new RedisGeoCommands.GeoLocation<>("restaurant2", new Point(15.087269, 37.502669)));
         redisTemplate.opsForGeo().add("restaurants",
                 new RedisGeoCommands.GeoLocation<>("restaurant3", new Point(15.087269, 37.502669)));
+
     }
 
     @Test
@@ -141,6 +142,28 @@ public class TestRedis {
         }
     }
 
+    @Test
+    public void testGetGeo2() {
+        // 设置中心点和半径
+        Point center = new Point(13.361389, 38.115556); // restaurant1 的地理位置
+        Distance radius = new Distance(500, Metrics.KILOMETERS); // 半径设为 5 公里
+        Circle area = new Circle(center, radius);
 
+        // 从 Redis 中获取指定范围内的地理位置
+        GeoResults<RedisGeoCommands.GeoLocation<String>> results = redisTemplate.opsForGeo()
+                .radius("restaurants", area);
+
+        // 输出结果
+        if (results != null) {
+            for (GeoResult<RedisGeoCommands.GeoLocation<String>> result : results) {
+                RedisGeoCommands.GeoLocation<String> location = result.getContent();
+                if (location != null) {
+                    System.out.println("Restaurant: " + location.getName());
+                }
+            }
+        } else {
+            System.out.println("No restaurants found within 5 kilometers.");
+        }
+    }
 
 }
