@@ -3,8 +3,7 @@ package com.xiaoke.springbootredis;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.geo.Distance;
-import org.springframework.data.geo.Point;
+import org.springframework.data.geo.*;
 import org.springframework.data.redis.connection.RedisGeoCommands;
 import org.springframework.data.redis.core.RedisTemplate;
 
@@ -92,11 +91,20 @@ public class TestRedis {
     }
 
     @Test
+    public void testGetBitmap() {
+        long userId = 9527;
+        System.out.println(redisTemplate.opsForValue().getBit("active:2024-11-01", userId));
+        System.out.println(redisTemplate.opsForValue().getBit("active:2024-11-02", userId));
+        System.out.println(redisTemplate.opsForValue().getBit("active:2024-11-03", userId));
+    }
+
+    @Test
     public void testSetHyperLogLog() {
         redisTemplate.opsForHyperLogLog().add("user:123:visited", "page1");
         redisTemplate.opsForHyperLogLog().add("user:123:visited", "page2");
         redisTemplate.opsForHyperLogLog().add("user:123:visited", "page3");
     }
+
     @Test
     public void testGetHyperLogLog() {
         System.out.println(redisTemplate.opsForHyperLogLog().size("user:123:visited"));
@@ -111,4 +119,28 @@ public class TestRedis {
         redisTemplate.opsForGeo().add("restaurants",
                 new RedisGeoCommands.GeoLocation<>("restaurant3", new Point(15.087269, 37.502669)));
     }
+
+    @Test
+    public void testGetGeo() {
+        // 获取"restaurants"集合中指定地点的地理位置
+        List<Point> points = redisTemplate.opsForGeo().position("restaurants", "restaurant1", "restaurant2", "restaurant3");
+        if (points != null) {
+            for (Point point : points) {
+                System.out.println("Longitude: " + point.getX() + ", Latitude: " + point.getY());
+            }
+        } else {
+            System.out.println("No points found.");
+        }
+
+        // 获取"restaurants"集合中指定地点之间的距离
+        Distance distance = redisTemplate.opsForGeo().distance("restaurants", "restaurant1", "restaurant2");
+        if (distance != null) {
+            System.out.println("Distance between restaurant1 and restaurant2: " + distance.getValue() + " " + distance.getMetric());
+        } else {
+            System.out.println("Distance could not be calculated.");
+        }
+    }
+
+
+
 }
