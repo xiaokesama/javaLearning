@@ -8,6 +8,7 @@
         <option value="$PROJECT_DIR$/springboot-mino/pom.xml" />
         <option value="$PROJECT_DIR$/springboot-redis/pom.xml" />
         <option value="$PROJECT_DIR$/springboot-httpclient/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot-jwt/pom.xml" />
       </list>
     </option>
   </component>

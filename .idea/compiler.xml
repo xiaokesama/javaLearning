@@ -11,6 +11,7 @@
         <module name="springboot-mino" />
         <module name="springboot-redis" />
         <module name="springboot-httpclient" />
+        <module name="springboot-jwt" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -21,6 +22,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="nacosDemo" options="-parameters" />
       <module name="springboot-httpclient" options="-parameters" />
+      <module name="springboot-jwt" options="-parameters" />
       <module name="springboot-mino" options="-parameters" />
       <module name="springboot-nacos" options="-parameters" />
       <module name="springboot-redis" options="-parameters" />
